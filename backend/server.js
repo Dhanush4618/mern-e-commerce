@@ -26,19 +26,36 @@ app.use(cookieParser());
 const frontendOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(',').map((origin) => origin.trim())
   : [];
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173', ...frontendOrigins];
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl)
     if (!origin) {
       return callback(null, true);
     }
-    if (allowedOrigins.includes(origin)) {
+
+    // Allow localhost for development
+    if (origin === 'http://localhost:5173' || origin === 'http://127.0.0.1:5173') {
       return callback(null, true);
     }
-    if (!process.env.FRONTEND_URL && origin.endsWith('.vercel.app')) {
+
+    // Allow configured FRONTEND_URL origins
+    if (frontendOrigins.length > 0 && frontendOrigins.includes(origin)) {
       return callback(null, true);
     }
+
+    // Allow any Vercel preview or production deployment
+    if (origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+
+    // Allow any Render deployment
+    if (origin.endsWith('.onrender.com')) {
+      return callback(null, true);
+    }
+
+    // Reject other origins
+    console.warn(`CORS rejected: ${origin}`);
     callback(new Error(`CORS policy does not allow access from ${origin}`), false);
   },
   credentials: true,
