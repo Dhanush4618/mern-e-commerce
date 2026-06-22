@@ -75,10 +75,12 @@ export const CartProvider = ({ children }) => {
   }, [state.paymentMethod]);
 
   const addToCart = (product, qty) => {
+    const productId = product._id || product.product;
     dispatch({
       type: 'CART_ADD_ITEM',
       payload: {
-        product: product._id,
+        product: productId,
+        _id: productId,
         name: product.name,
         image: product.image,
         price: product.price,

@@ -10,7 +10,9 @@ const LoginPage = () => {
   const location = useLocation();
   const { userInfo, loading, error, login } = useAuth();
 
-  const redirect = location.search ? location.search.split('=')[1] : '/';
+  const searchParams = new URLSearchParams(location.search);
+  const redirectParam = searchParams.get('redirect') || '/';
+  const redirect = redirectParam.startsWith('/') ? redirectParam : `/${redirectParam}`;
 
   useEffect(() => {
     if (userInfo) {

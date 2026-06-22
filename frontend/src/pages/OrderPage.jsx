@@ -172,22 +172,22 @@ const OrderPage = () => {
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Items</span>
-              <span style={{ fontWeight: 500 }}>${order.itemsPrice.toFixed(2)}</span>
+              <span style={{ fontWeight: 500 }}>${(order.itemsPrice || 0).toFixed(2)}</span>
             </div>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Shipping</span>
-              <span style={{ fontWeight: 500 }}>${order.shippingPrice.toFixed(2)}</span>
+              <span style={{ fontWeight: 500 }}>${(order.shippingPrice || 0).toFixed(2)}</span>
             </div>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Tax</span>
-              <span style={{ fontWeight: 500 }}>${order.taxPrice.toFixed(2)}</span>
+              <span style={{ fontWeight: 500 }}>${(order.taxPrice || 0).toFixed(2)}</span>
             </div>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', fontWeight: 'bold', fontSize: '1.25rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
               <span>Total</span>
-              <span style={{ color: 'var(--color-primary)' }}>${order.totalPrice.toFixed(2)}</span>
+              <span style={{ color: 'var(--color-primary)' }}>${(order.totalPrice || 0).toFixed(2)}</span>
             </div>
             
             {/* Pay Now Button (Client Action) */}

@@ -45,7 +45,7 @@ const PlaceOrderPage = () => {
       }, { withCredentials: true });
 
       clearCart();
-      navigate(`/order/${data._id}`); // Redirect to real order page
+      navigate(`/order/${data._id}`);  // Redirect to real order page
     } catch (error) {
       console.error(error);
       alert(error.response?.data?.message || error.message);

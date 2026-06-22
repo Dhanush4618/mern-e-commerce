@@ -6,11 +6,13 @@ const PaymentPage = () => {
   const { shippingAddress, savePaymentMethod } = useCart();
   const navigate = useNavigate();
 
-  if (!shippingAddress.address) {
-    navigate('/shipping');
-  }
-
   const [paymentMethod, setPaymentMethod] = useState('Stripe');
+
+  useEffect(() => {
+    if (!shippingAddress.address) {
+      navigate('/shipping');
+    }
+  }, [shippingAddress, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
