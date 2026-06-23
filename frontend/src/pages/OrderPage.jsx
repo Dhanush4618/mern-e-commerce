@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 const OrderPage = () => {
   const { id: orderId } = useParams();
   const { userInfo } = useAuth();
-  
+
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -91,7 +91,7 @@ const OrderPage = () => {
   return (
     <div>
       <h1 style={{ marginBottom: '1.5rem', fontSize: '1.75rem' }}>Order ID: <span style={{ color: 'var(--color-primary)' }}>{order._id}</span></h1>
-      
+
       <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
         {/* Left column */}
         <div style={{ flex: '3 1 500px' }}>
@@ -144,10 +144,10 @@ const OrderPage = () => {
               <div>
                 {order.orderItems.map((item, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
-                    <img 
-                      src={item.image} 
-                      alt={item.name} 
-                      style={{ width: '55px', borderRadius: '8px', marginRight: '1.2rem', objectFit: 'cover' }} 
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      style={{ width: '55px', borderRadius: '8px', marginRight: '1.2rem', objectFit: 'cover' }}
                       onError={(e) => {
                         e.target.src = 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80';
                       }}
@@ -169,27 +169,27 @@ const OrderPage = () => {
         <div style={{ flex: '1 1 300px', maxWidth: '400px' }}>
           <div style={{ background: '#fff', padding: '2rem', borderRadius: 'var(--border-radius)', boxShadow: 'var(--shadow-md)', position: 'sticky', top: '100px' }}>
             <h2 style={{ fontSize: '1.25rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem', marginBottom: '1.5rem' }}>Order Summary</h2>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Items</span>
               <span style={{ fontWeight: 500 }}>${(order.itemsPrice || 0).toFixed(2)}</span>
             </div>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Shipping</span>
               <span style={{ fontWeight: 500 }}>${(order.shippingPrice || 0).toFixed(2)}</span>
             </div>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Tax</span>
               <span style={{ fontWeight: 500 }}>${(order.taxPrice || 0).toFixed(2)}</span>
             </div>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', fontWeight: 'bold', fontSize: '1.25rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
               <span>Total</span>
               <span style={{ color: 'var(--color-primary)' }}>${(order.totalPrice || 0).toFixed(2)}</span>
             </div>
-            
+
             {/* Pay Now Button (Client Action) */}
             {!order.isPaid && (
               <div style={{ marginTop: '1.5rem' }}>
@@ -220,11 +220,11 @@ const OrderPage = () => {
                 <button
                   onClick={deliverOrderHandler}
                   className="btn-primary"
-                  style={{ 
-                    width: '100%', 
-                    padding: '1.1rem', 
-                    borderRadius: '8px', 
-                    fontSize: '1.1rem', 
+                  style={{
+                    width: '100%',
+                    padding: '1.1rem',
+                    borderRadius: '8px',
+                    fontSize: '1.1rem',
                     fontWeight: 600,
                     backgroundColor: 'var(--color-secondary)'
                   }}

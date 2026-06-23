@@ -41,6 +41,10 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'AUTH_REQUEST' });
     try {
       const { data } = await axios.post('/api/users/login', { email, password });
+      // Store token in localStorage for cross-domain Authorization header fallback
+      if (data.token) {
+        localStorage.setItem('jwtToken', data.token);
+      }
       dispatch({ type: 'AUTH_SUCCESS', payload: data });
     } catch (error) {
       dispatch({
@@ -56,6 +60,10 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'AUTH_REQUEST' });
     try {
       const { data } = await axios.post('/api/users', { name, email, password });
+      // Store token in localStorage for cross-domain Authorization header fallback
+      if (data.token) {
+        localStorage.setItem('jwtToken', data.token);
+      }
       dispatch({ type: 'AUTH_SUCCESS', payload: data });
     } catch (error) {
       dispatch({
@@ -73,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error('Logout failed on server', err);
     }
+    localStorage.removeItem('jwtToken');
     dispatch({ type: 'AUTH_LOGOUT' });
   };
 

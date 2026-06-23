@@ -5,8 +5,17 @@ import User from '../models/userModel.js';
 const protect = async (req, res, next) => {
   let token;
 
-  // Read the JWT from the cookie
-  token = req.cookies.jwt;
+  // Read the JWT from the cookie first, then fall back to Authorization header
+  // This dual approach handles cross-domain deployments (e.g. Vercel + Render)
+  // where browsers may block cross-site cookies.
+  if (req.cookies && req.cookies.jwt) {
+    token = req.cookies.jwt;
+  } else if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer ')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
   if (token) {
     try {

@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import jwt from 'jsonwebtoken';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -13,11 +14,15 @@ const authUser = async (req, res, next) => {
     if (user && (await user.matchPassword(password))) {
       generateToken(res, user._id);
 
+      // Also return token in body for cross-domain clients that can't use cookies
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+
       res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        token,
       });
     } else {
       res.status(401);
@@ -51,11 +56,15 @@ const registerUser = async (req, res, next) => {
     if (user) {
       generateToken(res, user._id);
 
+      // Also return token in body for cross-domain clients that can't use cookies
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+
       res.status(201).json({
         _id: user._id,
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        token,
       });
     } else {
       res.status(400);
