@@ -78,7 +78,7 @@ const updateOrderToPaid = async (req, res, next) => {
         id: req.body.id,
         status: req.body.status,
         update_time: req.body.update_time,
-        email_address: req.body.email_address, // Usually from Stripe/PayPal
+        email_address: req.body.email_address, // Usually from Payment Gateway (e.g. PayPal)
       };
 
       const updatedOrder = await order.save();

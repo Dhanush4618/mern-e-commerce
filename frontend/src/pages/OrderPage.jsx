@@ -10,7 +10,6 @@ const OrderPage = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [stripeConfig, setStripeConfig] = useState(null);
   const [loadingPay, setLoadingPay] = useState(false);
   const [loadingDeliver, setLoadingDeliver] = useState(false);
 
@@ -30,23 +29,11 @@ const OrderPage = () => {
     fetchOrder();
   }, [orderId]);
 
-  useEffect(() => {
-    const fetchStripeConfig = async () => {
-      try {
-        const { data } = await axios.get('/api/config/stripe');
-        setStripeConfig(data.publishableKey);
-      } catch (error) {
-        console.error('Error fetching Stripe config:', error);
-      }
-    };
-    fetchStripeConfig();
-  }, []);
-
   const payOrderHandler = async () => {
     try {
       setLoadingPay(true);
       const paymentResult = {
-        id: 'simulated_stripe_ch_' + Math.random().toString(36).substr(2, 9),
+        id: 'simulated_pay_' + Math.random().toString(36).substr(2, 9),
         status: 'succeeded',
         update_time: new Date().toISOString(),
         email_address: userInfo ? userInfo.email : 'customer@example.com',
@@ -76,7 +63,7 @@ const OrderPage = () => {
     }
   };
 
-  if (loading) return <h2 style={{ textAlign: 'center', marginTop: '3rem' }}>Loading Order details...</h2>;
+  if (loading) return <h2 style={{ textAlign: 'center', marginTop: '3rem' }}>  Loading Order details...</h2>;
   if (error) return (
     <div style={{ marginTop: '2rem' }}>
       <Link to="/profile" className="btn-primary" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>Go Back To Profile</Link>
@@ -193,23 +180,13 @@ const OrderPage = () => {
             {/* Pay Now Button (Client Action) */}
             {!order.isPaid && (
               <div style={{ marginTop: '1.5rem' }}>
-                <div style={{ background: 'var(--color-background)', padding: '1.2rem', borderRadius: '10px', textAlign: 'center', border: '1px dashed var(--color-border)', marginBottom: '1rem' }}>
-                  {stripeConfig ? (
-                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-                      Stripe integration active <br />
-                      <code>{stripeConfig.substring(0, 20)}...</code>
-                    </p>
-                  ) : (
-                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Initializing payment gateway...</p>
-                  )}
-                </div>
                 <button
                   onClick={payOrderHandler}
                   className="btn-primary"
                   style={{ width: '100%', padding: '1.1rem', borderRadius: '8px', fontSize: '1.1rem', fontWeight: 600 }}
                   disabled={loadingPay}
                 >
-                  {loadingPay ? 'Processing Payment...' : 'Pay Now (Test Stripe)'}
+                  {loadingPay ? 'Processing Payment...' : 'Pay Now (Simulated Payment)'}
                 </button>
               </div>
             )}

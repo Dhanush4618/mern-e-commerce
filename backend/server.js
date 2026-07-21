@@ -70,10 +70,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
-// Stripe config route
-app.get('/api/config/stripe', (req, res) => {
-  res.send({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder' });
-});
 
 // Error Middleware
 app.use(notFound);

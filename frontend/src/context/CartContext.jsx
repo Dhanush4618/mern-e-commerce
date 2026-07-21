@@ -11,7 +11,7 @@ const initialState = {
     : {},
   paymentMethod: localStorage.getItem('paymentMethod')
     ? JSON.parse(localStorage.getItem('paymentMethod'))
-    : 'Stripe',
+    : 'PayPal',
 };
 
 const cartReducer = (state, action) => {

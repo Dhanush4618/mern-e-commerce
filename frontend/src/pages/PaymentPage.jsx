@@ -6,7 +6,7 @@ const PaymentPage = () => {
   const { shippingAddress, savePaymentMethod } = useCart();
   const navigate = useNavigate();
 
-  const [paymentMethod, setPaymentMethod] = useState('Stripe');
+  const [paymentMethod, setPaymentMethod] = useState('PayPal');
 
   useEffect(() => {
     if (!shippingAddress.address) {
@@ -24,17 +24,31 @@ const PaymentPage = () => {
     <div style={{ maxWidth: '500px', margin: 'auto', background: '#fff', padding: '2rem', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
       <h2>Payment Method</h2>
       <form onSubmit={submitHandler} style={{ marginTop: '1.5rem' }}>
+        <div style={{ marginBottom: '1rem' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', cursor: 'pointer' }}>
+            <input 
+              type="radio" 
+              name="paymentMethod" 
+              value="PayPal" 
+              checked={paymentMethod === 'PayPal'}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              style={{ width: '20px', height: '20px' }}
+            />
+            PayPal or Credit Card
+          </label>
+        </div>
+        
         <div style={{ marginBottom: '1.5rem' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', cursor: 'pointer' }}>
             <input 
               type="radio" 
               name="paymentMethod" 
-              value="Stripe" 
-              checked={paymentMethod === 'Stripe'}
+              value="Cash on Delivery" 
+              checked={paymentMethod === 'Cash on Delivery'}
               onChange={(e) => setPaymentMethod(e.target.value)}
               style={{ width: '20px', height: '20px' }}
             />
-            Stripe / Credit Card
+            Cash on Delivery (COD)
           </label>
         </div>
         
